@@ -1,51 +1,36 @@
 package timer;
 
-import java.awt.Color;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-public class Timer extends JFrame implements Runnable{
-	private LocalDateTime time;
-	private JLabel timeLabel;
-	public Timer() {
-		setSize(300,70);
+public class Timer {
+	public static void main(String[] args) {
+		Scanner scnner = new Scanner(System.in);
 		
-		time = LocalDateTime.now();
-		timeLabel = new JLabel("현재 시각:"+time.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초")));
-		timeLabel.setForeground(Color.WHITE);
+		System.out.println("Start measuring time");
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.BLACK);
-		panel.add(timeLabel);
+		long startTime = System.currentTimeMillis();
 		
-		new Thread(this).start();
+		sleep(500);
 		
-		add(panel);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		System.out.println("Enter \"Stop\"");
+		
+		while(!scnner.nextLine().equals("Stop")) {
+			System.out.println("Not match \"Stop\"");
+		}
+		
+		long endTime = System.currentTimeMillis();
+		
+		System.out.println("Elapsed Time:"+(double)(endTime - startTime)/1000);
+		
 	}
 	
 	
-	@Override
-	public void run() {
-		while(true) {
-			try {
-				Thread.sleep(1000);
-				time = time.plusSeconds(1); 
-				timeLabel.setText("현재 시각:"+time.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초")));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	static void sleep(long millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
-	
-	public static void main(String[] args) {
-		new Timer().setVisible(true);;
-	}
-
 }
