@@ -12,7 +12,6 @@ public class Regex {
 		System.out.println(str.replaceAll("[0-9]", ""));  //숫자만 선택
 		System.out.println(str.replaceAll("[a-zA-Z]", "")); //영어 소문자,대문자만 선택
 		
-		
 	}
 
 }
